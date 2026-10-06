@@ -1,0 +1,8 @@
+# Agent-01 V0.1 依赖
+# Python 3.11+
+
+# LLM 调用（仅 OpenAIProvider 需要；离线测试用 ScriptedProvider，不装也能跑 pytest）
+openai>=1.30.0
+
+# 测试
+pytest>=8.0.0

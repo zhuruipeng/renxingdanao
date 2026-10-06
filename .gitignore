@@ -1,0 +1,15 @@
+# 密钥 —— 绝不进版本库
+.env
+
+# 运行时产物
+__pycache__/
+*.pyc
+.pytest_cache/
+venv/
+.venv/
+
+# WIP 阶段的实验库（V0.3~V0.5 的历史数据体积大且已归档，
+# 放在迁移包 / 压缩包里随包带走，不进 git）
+agent.db
+agent.db-wal
+agent.db-shm

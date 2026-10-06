@@ -1,0 +1,62 @@
+========================================================================
+Agent-01 V0.5 单次实验报告 · 实验 #1（第 1 次）
+主题：Zephyra 分布式哈希存储
+========================================================================
+
+【阶段顺序】pre_blind → study → practice → open_book → memory_blind → transfer_blind
+
+【分数】
+  PRE_BLIND             70.0
+  OPEN_BOOK             70.0
+  MEMORY_BLIND          70.0
+  TRANSFER_BLIND        70.0
+  机器判分实践               100.0
+  LLM 评审实践              32.5
+  笔记质量                  52.0
+
+【四类 gain（禁止称训练成功）】
+  external_memory_gain      +0.0
+  memory_retention_gain     +0.0
+  transfer_gain             +0.0
+  objective_practice_gain   +30.0
+  transfer - memory         +0.0   正数 = 同场景能答，换场景掉分
+
+【机器判分（objective）】
+  [PASS]  100.0  obj_hash_01  (algorithm_output)
+  [PASS]  100.0  obj_hash_02  (python_unit_test)
+  [PASS]  100.0  obj_bucket_01  (algorithm_output)
+  [PASS]  100.0  obj_bucket_02  (sql_exec)
+  [PASS]  100.0  obj_compact_01  (json_schema)
+  [PASS]  100.0  obj_compact_02  (python_unit_test)
+  [PASS]  100.0  obj_consist_01  (algorithm_output)
+  [PASS]  100.0  obj_consist_02  (sql_exec)
+  均分 100.0   通过率 100.0%
+
+【LLM 评审（evaluator）】
+  [不可用]   20.0  obj_hash_01
+  [不可用]   20.0  obj_hash_02
+  [不可用]   35.0  obj_bucket_01
+  [可用]   55.0  obj_bucket_02
+  [不可用]   20.0  obj_compact_01
+  [不可用]   20.0  obj_compact_02
+  [不可用]   20.0  obj_consist_01
+  [可用]   70.0  obj_consist_02
+  均分 32.5
+  ! 机器分与 LLM 分相差 ≥30 的任务 8 个：
+    obj_hash_01: 机器 100.0 / LLM 20.0（objective_higher）
+    obj_hash_02: 机器 100.0 / LLM 20.0（objective_higher）
+    obj_bucket_01: 机器 100.0 / LLM 35.0（objective_higher）
+    obj_bucket_02: 机器 100.0 / LLM 55.0（objective_higher）
+    obj_compact_01: 机器 100.0 / LLM 20.0（objective_higher）
+    obj_compact_02: 机器 100.0 / LLM 20.0（objective_higher）
+    obj_consist_01: 机器 100.0 / LLM 20.0（objective_higher）
+    obj_consist_02: 机器 100.0 / LLM 70.0（objective_higher）
+
+【隔离自检】
+  盲考 context 恒空：是
+  开卷有 context　：是
+  参考答案未泄题　：是
+  阶段记录行数　：44
+  各阶段行数　　　：{'memory_blind': 8, 'open_book': 8, 'practice': 8, 'pre_blind': 8, 'study': 4, 'transfer_blind': 8}
+
+========================================================================

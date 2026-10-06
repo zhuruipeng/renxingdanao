@@ -1,0 +1,378 @@
+{
+  "trials": 1,
+  "experiment_ids": [
+    1
+  ],
+  "scores": {
+    "1": {
+      "pre_blind": 70.0,
+      "open_book": 70.0,
+      "memory_blind": 70.0,
+      "transfer_blind": 70.0,
+      "objective_practice_avg": 100.0,
+      "objective_practice_pass_rate": 1.0,
+      "evaluator_practice_avg": 32.5,
+      "note_quality_avg": 52.05
+    }
+  },
+  "gains": {
+    "1": {
+      "external_memory_gain": 0.0,
+      "memory_retention_gain": 0.0,
+      "transfer_gain": 0.0,
+      "objective_practice_gain": 30.0
+    }
+  },
+  "objective_detail": [
+    {
+      "task_id": "obj_hash_01",
+      "kp": "kp_lumen_hash",
+      "kind": "algorithm_output",
+      "checker": "check_hash_algorithm",
+      "passed": true,
+      "objective_score": 100.0,
+      "checks": [
+        {
+          "name": "steps 是整数数组且逐步递减式完整",
+          "passed": true,
+          "detail": "实际 [7, 1014, 1858, 46886]"
+        },
+        {
+          "name": "lumen_hash 正确",
+          "passed": true,
+          "detail": "期望 46886，实际 46886"
+        },
+        {
+          "name": "steps 每一步中间值都正确",
+          "passed": true,
+          "detail": "期望 [7, 1014, 1858, 46886]，实际 [7, 1014, 1858, 46886]"
+        },
+        {
+          "name": "steps 初值正确（材料规定的初值不是 0）",
+          "passed": true,
+          "detail": "期望初值 7，实际 7"
+        },
+        {
+          "name": "bucket 正确（哈希值对 8 取模）",
+          "passed": true,
+          "detail": "期望 6，实际 6"
+        }
+      ],
+      "detail": "全部通过",
+      "evaluator": "objective_checker",
+      "parse_error": ""
+    },
+    {
+      "task_id": "obj_hash_02",
+      "kp": "kp_lumen_hash",
+      "kind": "python_unit_test",
+      "checker": "check_hash_unit_test",
+      "passed": true,
+      "objective_score": 100.0,
+      "checks": [
+        {
+          "name": "代码只做纯计算（无危险 import）",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "代码可执行",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "5 组用例全部通过（含模型没见过的键）",
+          "passed": true,
+          "detail": "失败 0 组：[]"
+        }
+      ],
+      "detail": "全部通过",
+      "evaluator": "objective_checker",
+      "parse_error": ""
+    },
+    {
+      "task_id": "obj_bucket_01",
+      "kp": "kp_lumen_bucket",
+      "kind": "algorithm_output",
+      "checker": "check_split_algorithm",
+      "passed": true,
+      "objective_score": 100.0,
+      "checks": [
+        {
+          "name": "assignments 覆盖全部 5 个键",
+          "passed": true,
+          "detail": "实际 [{'key': 'k0', 'from_bucket': 0, 'to_bucket': 0}, {'key': 'k8', 'from_bucket': 0, 'to_bucket': 0}, {'key': 'k16', 'from_bucket': 0, 'to_bucket': 0}, {'key': 'k24', 'from_bucket': 0, 'to_bucket': 0}, {'key': 'k32', 'from_bucket': 0, 'to_bucket': 0}]"
+        },
+        {
+          "name": "每个键的分裂后桶号都正确",
+          "passed": true,
+          "detail": "期望 {'k0': 0, 'k8': 0, 'k16': 0, 'k24': 0, 'k32': 0}，实际 {'k0': 0, 'k8': 0, 'k16': 0, 'k24': 0, 'k32': 0}"
+        },
+        {
+          "name": "没有键被迁移到非 0 号桶（(0+8) mod 8 = 0）",
+          "passed": true,
+          "detail": "以下键被算到了别的桶：[]"
+        },
+        {
+          "name": "migrated_count 正确（分裂是恒等变换，实际迁移 0 个）",
+          "passed": true,
+          "detail": "期望 0，实际 0"
+        },
+        {
+          "name": "still_over_limit 正确（分裂不减负载，桶仍然超限）",
+          "passed": true,
+          "detail": "期望 True，实际 True"
+        }
+      ],
+      "detail": "全部通过",
+      "evaluator": "objective_checker",
+      "parse_error": ""
+    },
+    {
+      "task_id": "obj_bucket_02",
+      "kp": "kp_lumen_bucket",
+      "kind": "sql_exec",
+      "checker": "check_overload_sql",
+      "passed": true,
+      "objective_score": 100.0,
+      "checks": [
+        {
+          "name": "SQL 可执行且只读",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "结果只有一列（没有多查无关字段）",
+          "passed": true,
+          "detail": "实际每行列数 [1, 1, 1]"
+        },
+        {
+          "name": "超载桶号集合 与期望完全一致（含顺序）",
+          "passed": true,
+          "detail": "期望 [[3], [4], [7]]，实际 [[3], [4], [7]]"
+        }
+      ],
+      "detail": "全部通过",
+      "evaluator": "objective_checker",
+      "parse_error": ""
+    },
+    {
+      "task_id": "obj_compact_01",
+      "kp": "kp_lumen_compact",
+      "kind": "json_schema",
+      "checker": "check_compact_schema",
+      "passed": true,
+      "objective_score": 100.0,
+      "checks": [
+        {
+          "name": "compress 是整数数组",
+          "passed": true,
+          "detail": "实际 [0, 3]"
+        },
+        {
+          "name": "触发压缩的桶号完全正确（条件 A 与 B 必须同时成立）",
+          "passed": true,
+          "detail": "期望 [0, 3]，实际 [0, 3]"
+        },
+        {
+          "name": "没有把「墓碑多但活跃键也多」的桶误判为触发",
+          "passed": true,
+          "detail": "实际 [0, 3]"
+        },
+        {
+          "name": "epoch_after 正确（每触发一次压缩全局 epoch 加 1）",
+          "passed": true,
+          "detail": "期望 3，实际 3"
+        }
+      ],
+      "detail": "全部通过",
+      "evaluator": "objective_checker",
+      "parse_error": ""
+    },
+    {
+      "task_id": "obj_compact_02",
+      "kp": "kp_lumen_compact",
+      "kind": "python_unit_test",
+      "checker": "check_compact_unit_test",
+      "passed": true,
+      "objective_score": 100.0,
+      "checks": [
+        {
+          "name": "代码只做纯计算（无危险 import）",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "代码可执行",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "6 组用例全部通过（'且' 与 '或' 混用会在其中一组挂掉）",
+          "passed": true,
+          "detail": "失败 0 组：[]"
+        }
+      ],
+      "detail": "全部通过",
+      "evaluator": "objective_checker",
+      "parse_error": ""
+    },
+    {
+      "task_id": "obj_consist_01",
+      "kp": "kp_lumen_consist",
+      "kind": "algorithm_output",
+      "checker": "check_consistency_algorithm",
+      "passed": true,
+      "objective_score": 100.0,
+      "checks": [
+        {
+          "name": "readable 是字符串数组",
+          "passed": true,
+          "detail": "实际 []"
+        },
+        {
+          "name": "readable 正确（epoch 变了，存量键全部失配）",
+          "passed": true,
+          "detail": "期望 []，实际 []"
+        },
+        {
+          "name": "need_retag 正确（4 个键全部需要重算）",
+          "passed": true,
+          "detail": "期望 ['x1', 'x2', 'x3', 'x4']，实际 ['x1', 'x2', 'x3', 'x4']"
+        },
+        {
+          "name": "new_tags 是「键名 → 整数标签」的对象",
+          "passed": true,
+          "detail": "实际 {'x1': 2502, 'x2': 4002, 'x3': 6002, 'x4': 8202}"
+        },
+        {
+          "name": "每个新标签 = (LumenHash + 当前 epoch) mod 65537",
+          "passed": true,
+          "detail": "期望 {'x1': 2502, 'x2': 4002, 'x3': 6002, 'x4': 8202}，实际 {'x1': 2502, 'x2': 4002, 'x3': 6002, 'x4': 8202}"
+        }
+      ],
+      "detail": "全部通过",
+      "evaluator": "objective_checker",
+      "parse_error": ""
+    },
+    {
+      "task_id": "obj_consist_02",
+      "kp": "kp_lumen_consist",
+      "kind": "sql_exec",
+      "checker": "check_unreadable_sql",
+      "passed": true,
+      "objective_score": 100.0,
+      "checks": [
+        {
+          "name": "SQL 可执行且只读",
+          "passed": true,
+          "detail": ""
+        },
+        {
+          "name": "结果只有一列（没有多查无关字段）",
+          "passed": true,
+          "detail": "实际每行列数 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]"
+        },
+        {
+          "name": "读取被拒的键集合 与期望完全一致（含顺序）",
+          "passed": true,
+          "detail": "期望 [['k01'], ['k02'], ['k03'], ['k04'], ['k05'], ['k06'], ['k07'], ['k08'], ['k09'], ['k10']]，实际 [['k01'], ['k02'], ['k03'], ['k04'], ['k05'], ['k06'], ['k07'], ['k08'], ['k09'], ['k10']]"
+        }
+      ],
+      "detail": "全部通过",
+      "evaluator": "objective_checker",
+      "parse_error": ""
+    }
+  ],
+  "evaluator_practice": [
+    {
+      "kp": "kp_lumen_hash",
+      "task_id": "obj_hash_01",
+      "score": 20.0,
+      "usable": false,
+      "verdict": "fail",
+      "evaluator": "rule_fallback",
+      "feedback": "规则兜底：未做正确性核验，仅按可操作性打分"
+    },
+    {
+      "kp": "kp_lumen_hash",
+      "task_id": "obj_hash_02",
+      "score": 20.0,
+      "usable": false,
+      "verdict": "fail",
+      "evaluator": "rule_fallback",
+      "feedback": "规则兜底：未做正确性核验，仅按可操作性打分"
+    },
+    {
+      "kp": "kp_lumen_bucket",
+      "task_id": "obj_bucket_01",
+      "score": 35.0,
+      "usable": false,
+      "verdict": "fail",
+      "evaluator": "rule_fallback",
+      "feedback": "规则兜底：未做正确性核验，仅按可操作性打分"
+    },
+    {
+      "kp": "kp_lumen_bucket",
+      "task_id": "obj_bucket_02",
+      "score": 55.0,
+      "usable": true,
+      "verdict": "pass",
+      "evaluator": "rule_fallback",
+      "feedback": "规则兜底：未做正确性核验，仅按可操作性打分"
+    },
+    {
+      "kp": "kp_lumen_compact",
+      "task_id": "obj_compact_01",
+      "score": 20.0,
+      "usable": false,
+      "verdict": "fail",
+      "evaluator": "rule_fallback",
+      "feedback": "规则兜底：未做正确性核验，仅按可操作性打分"
+    },
+    {
+      "kp": "kp_lumen_compact",
+      "task_id": "obj_compact_02",
+      "score": 20.0,
+      "usable": false,
+      "verdict": "fail",
+      "evaluator": "rule_fallback",
+      "feedback": "规则兜底：未做正确性核验，仅按可操作性打分"
+    },
+    {
+      "kp": "kp_lumen_consist",
+      "task_id": "obj_consist_01",
+      "score": 20.0,
+      "usable": false,
+      "verdict": "fail",
+      "evaluator": "rule_fallback",
+      "feedback": "规则兜底：未做正确性核验，仅按可操作性打分"
+    },
+    {
+      "kp": "kp_lumen_consist",
+      "task_id": "obj_consist_02",
+      "score": 70.0,
+      "usable": true,
+      "verdict": "pass",
+      "evaluator": "rule_fallback",
+      "feedback": "规则兜底：未做正确性核验，仅按可操作性打分"
+    }
+  ],
+  "consistency_check": {
+    "blind_context_empty": true,
+    "open_book_context_present": true,
+    "answer_leak": false,
+    "leaked": [],
+    "stage_counts": {
+      "memory_blind": 8,
+      "open_book": 8,
+      "practice": 8,
+      "pre_blind": 8,
+      "study": 4,
+      "transfer_blind": 8
+    },
+    "stage_row_count": 44,
+    "problems": []
+  },
+  "caveats": []
+}
